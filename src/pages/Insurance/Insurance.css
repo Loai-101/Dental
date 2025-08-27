@@ -324,133 +324,97 @@
 /* Contact section */
 .contact-section {
   text-align: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border-radius: 20px;
-  padding: 4rem 3rem;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  background: white;
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid #e9ecef;
-  position: relative;
-  overflow: hidden;
-}
-
-.contact-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #74b9ff, #0984e3, #74b9ff);
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Contact section title */
 .contact-section .section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 2.2rem;
+  font-weight: 600;
   color: #2c3e50;
-  margin: 0 0 1.5rem 0;
+  margin: 0 auto 1.5rem auto;
   text-align: center;
   position: relative;
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  width: 100%;
 }
 
 .contact-section .section-title::after {
   content: '';
   position: absolute;
-  bottom: -12px;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
+  width: 60px;
+  height: 3px;
   background: linear-gradient(90deg, #74b9ff, #0984e3);
   border-radius: 2px;
 }
 
 /* Contact description */
 .contact-description {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #5a6c7d;
-  line-height: 1.8;
-  margin: 0 0 3rem 0;
-  max-width: 700px;
-  margin: 0 auto 3rem auto;
+  line-height: 1.6;
+  margin: 0 auto 2rem auto;
+  max-width: 600px;
   font-weight: 400;
   text-align: center;
+  padding: 0 1rem;
 }
 
 /* Contact buttons */
 .contact-buttons {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
+  width: 100%;
 }
 
 /* Contact button */
 .contact-button {
-  padding: 1rem 2rem;
-  border-radius: 12px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   border: none;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  position: relative;
-  overflow: hidden;
-  min-width: 200px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.contact-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.contact-button:hover::before {
-  left: 100%;
+  letter-spacing: 0.5px;
+  min-width: 180px;
 }
 
 .contact-button.primary {
   background: linear-gradient(135deg, #74b9ff, #0984e3);
   color: white;
-  border: 2px solid transparent;
 }
 
 .contact-button.primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(116, 185, 255, 0.4);
-  background: linear-gradient(135deg, #0984e3, #74b9ff);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(116, 185, 255, 0.3);
 }
 
 .contact-button.secondary {
   background: transparent;
   color: #0984e3;
   border: 2px solid #0984e3;
-  position: relative;
 }
 
 .contact-button.secondary:hover {
-  background: linear-gradient(135deg, #0984e3, #74b9ff);
+  background: #0984e3;
   color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(9, 132, 227, 0.3);
-  border-color: transparent;
-}
-
-.contact-button:active {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 /* Insurance companies section */
@@ -524,16 +488,16 @@
   }
 
   .contact-section {
-    padding: 3rem 2rem;
+    padding: 2.5rem 2rem;
   }
   
   .contact-section .section-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
   
   .contact-description {
     font-size: 1.1rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
   
   .contact-buttons {
@@ -618,18 +582,18 @@
   }
   
   .contact-section {
-    padding: 2.5rem 1.5rem;
-    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
   }
   
   .contact-section .section-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   .contact-description {
     font-size: 1rem;
     margin-bottom: 2rem;
-    line-height: 1.7;
+    line-height: 1.6;
   }
   
   .contact-buttons {
