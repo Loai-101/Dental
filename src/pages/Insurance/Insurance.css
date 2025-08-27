@@ -324,64 +324,133 @@
 /* Contact section */
 .contact-section {
   text-align: center;
-  background: white;
-  border-radius: 16px;
-  padding: 3rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 20px;
+  padding: 4rem 3rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid #e9ecef;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #74b9ff, #0984e3, #74b9ff);
+}
+
+/* Contact section title */
+.contact-section .section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contact-section .section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #74b9ff, #0984e3);
+  border-radius: 2px;
 }
 
 /* Contact description */
 .contact-description {
-  font-size: 1.1rem;
-  color: #6c757d;
-  line-height: 1.6;
-  margin: 0 0 2rem 0;
-  max-width: 600px;
-  margin: 0 auto 2rem auto;
+  font-size: 1.2rem;
+  color: #5a6c7d;
+  line-height: 1.8;
+  margin: 0 0 3rem 0;
+  max-width: 700px;
+  margin: 0 auto 3rem auto;
+  font-weight: 400;
+  text-align: center;
 }
 
 /* Contact buttons */
 .contact-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 /* Contact button */
 .contact-button {
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
+  padding: 1rem 2rem;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   border: none;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
+  position: relative;
+  overflow: hidden;
+  min-width: 200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.contact-button:hover::before {
+  left: 100%;
 }
 
 .contact-button.primary {
   background: linear-gradient(135deg, #74b9ff, #0984e3);
   color: white;
+  border: 2px solid transparent;
 }
 
 .contact-button.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(116, 185, 255, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(116, 185, 255, 0.4);
+  background: linear-gradient(135deg, #0984e3, #74b9ff);
 }
 
 .contact-button.secondary {
   background: transparent;
   color: #0984e3;
   border: 2px solid #0984e3;
+  position: relative;
 }
 
 .contact-button.secondary:hover {
-  background: #0984e3;
+  background: linear-gradient(135deg, #0984e3, #74b9ff);
   color: white;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(9, 132, 227, 0.3);
+  border-color: transparent;
+}
+
+.contact-button:active {
+  transform: translateY(-1px);
 }
 
 /* Insurance companies section */
@@ -452,6 +521,29 @@
   .insurance-companies-grid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1.2rem;
+  }
+
+  .contact-section {
+    padding: 3rem 2rem;
+  }
+  
+  .contact-section .section-title {
+    font-size: 2.2rem;
+  }
+  
+  .contact-description {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .contact-buttons {
+    gap: 1.2rem;
+  }
+  
+  .contact-button {
+    padding: 0.9rem 1.8rem;
+    font-size: 0.95rem;
+    min-width: 180px;
   }
 }
 
@@ -526,17 +618,32 @@
   }
   
   .contact-section {
-    padding: 2rem;
+    padding: 2.5rem 1.5rem;
+    border-radius: 16px;
+  }
+  
+  .contact-section .section-title {
+    font-size: 2rem;
+  }
+  
+  .contact-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.7;
   }
   
   .contact-buttons {
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
   }
   
   .contact-button {
     width: 100%;
-    max-width: 300px;
+    max-width: 280px;
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.6px;
   }
 
   .insurance-companies-grid {
