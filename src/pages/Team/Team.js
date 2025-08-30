@@ -38,7 +38,7 @@ const Team = () => {
       experience: "12 years",
       description: "Dr. Sarah specializes in comprehensive dental care and preventive treatments. She is known for her gentle approach and patient education.",
       skills: ["Dental Cleanings", "Cavity Fillings", "Root Canal Therapy", "Dental Exams", "Preventive Care", "Patient Education"],
-      image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.avif"
+      image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.jpg"
     },
     {
       id: 2,
@@ -47,7 +47,7 @@ const Team = () => {
       experience: "15 years",
       description: "Dr. Michael is a leading cosmetic dentist with expertise in smile makeovers and advanced aesthetic procedures.",
       skills: ["Teeth Whitening", "Porcelain Veneers", "Dental Bonding", "Smile Makeovers", "Cosmetic Contouring", "Gum Reshaping"],
-      image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.avif"
+      image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.jpg"
     },
     {
       id: 3,

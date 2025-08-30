@@ -58,7 +58,7 @@ const Services = () => {
         {
           name: "Dr. Sarah Johnson",
           specialty: "General Dentist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.avif"
+          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.jpg"
         }
       ],
       icon: <FaCog />,
@@ -86,7 +86,7 @@ const Services = () => {
         {
           name: "Dr. Michael Chen",
           specialty: "Cosmetic Dentist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.avif"
+          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.jpg"
         }
       ],
       icon: <FaStar />,
@@ -100,7 +100,7 @@ const Services = () => {
         {
           name: "Dr. Sarah Johnson",
           specialty: "General Dentist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.avif"
+          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.jpg"
         }
       ],
       icon: <FaTooth />,
@@ -142,7 +142,7 @@ const Services = () => {
         {
           name: "Dr. Sarah Johnson",
           specialty: "General Dentist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.avif"
+          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.jpg"
         }
       ],
       icon: <FaUserMd />,
