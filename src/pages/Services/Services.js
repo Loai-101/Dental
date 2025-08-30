@@ -56,9 +56,9 @@ const Services = () => {
       description: "Digital X-Rays - 3D Scanning - Bite Scanning & Adjustment",
       doctors: [
         {
-          name: "Dr. Roger El Bassit",
-          specialty: "Advanced Technology Specialist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.avif"
+          name: "Dr. Sarah Johnson",
+          specialty: "General Dentist",
+          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.avif"
         }
       ],
       icon: <FaCog />,
@@ -70,14 +70,9 @@ const Services = () => {
       description: "Gentle approach - Child Friendly Environment - From Infantry Through The Teen Years",
       doctors: [
         {
-          name: "Dr. Carla Moukarzel",
+          name: "Dr. Lisa Park",
           specialty: "Pediatric Dentist",
           image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216187/Signs-Good-Dentist_zmorau.jpg"
-        },
-        {
-          name: "Dr. Marlene Khoury",
-          specialty: "Pediatric Dentist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216190/vsm_1277540215_k6i0jh.jpg"
         }
       ],
       icon: <FaBaby />,
@@ -89,7 +84,7 @@ const Services = () => {
       description: "Bleaching - Composite or Ceramic Veneers - Crowns - Smile Design",
       doctors: [
         {
-          name: "Dr. Majd Mouawad",
+          name: "Dr. Michael Chen",
           specialty: "Cosmetic Dentist",
           image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.avif"
         }
@@ -103,14 +98,9 @@ const Services = () => {
       description: "Professional dental hygiene and preventive care services",
       doctors: [
         {
-          name: "DH. Fatima Alaraibi",
-          specialty: "Dental Hygienist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216190/vsm_1277540215_k6i0jh.jpg"
-        },
-        {
-          name: "DH. Ghadeer Omran",
-          specialty: "Dental Hygienist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216183/dental-associate-job-1170x780_ipoxli.jpg"
+          name: "Dr. Sarah Johnson",
+          specialty: "General Dentist",
+          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.avif"
         }
       ],
       icon: <FaTooth />,
@@ -122,8 +112,8 @@ const Services = () => {
       description: "State-of-the-Art - 3D Digital Technology",
       doctors: [
         {
-          name: "Lab Technicians",
-          specialty: "Dental Laboratory",
+          name: "Dr. James Martinez",
+          specialty: "Prosthodontist",
           image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216183/dental-associate-job-1170x780_ipoxli.jpg"
         }
       ],
@@ -136,14 +126,9 @@ const Services = () => {
       description: "Microscopic Root Canal Treatment",
       doctors: [
         {
-          name: "Dr. Mario Fares",
+          name: "Dr. Amanda Foster",
           specialty: "Endodontist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215714/Alex_in_the_surgery_at_Munro_Dental_eawjzy.webp"
-        },
-        {
-          name: "Dr. Sami El Bassit",
-          specialty: "Endodontist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.avif"
+          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216190/vsm_1277540215_k6i0jh.jpg"
         }
       ],
       icon: <FaMicroscope />,
@@ -155,24 +140,9 @@ const Services = () => {
       description: "Fillings - Crown - Bridge - Veneers - Denture - Deep Cleaning - Whitening",
       doctors: [
         {
-          name: "Dr. Elias El-Achkar",
+          name: "Dr. Sarah Johnson",
           specialty: "General Dentist",
           image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216185/d206ac53273ccf64b50c776db6d333692fe4a0e0-1920x1280_lqh5zq.avif"
-        },
-        {
-          name: "Dr. Donna Hassoun",
-          specialty: "General Dentist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216190/vsm_1277540215_k6i0jh.jpg"
-        },
-        {
-          name: "Dr. Marc El Bassit",
-          specialty: "General Dentist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215714/Alex_in_the_surgery_at_Munro_Dental_eawjzy.webp"
-        },
-        {
-          name: "Dr. Azza Fityani",
-          specialty: "General Dentist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216187/Signs-Good-Dentist_zmorau.jpg"
         }
       ],
       icon: <FaUserMd />,
@@ -184,9 +154,9 @@ const Services = () => {
       description: "Advanced laser technology for precise and comfortable dental procedures",
       doctors: [
         {
-          name: "Dr. Roger El Bassit",
-          specialty: "Laser Specialist",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.avif"
+          name: "Dr. Robert Wilson",
+          specialty: "Periodontist",
+          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216191/How-Often-Should-I-See-the-Dentist-scaled_etmpkb.jpg"
         }
       ],
       icon: <FaBolt />,
@@ -198,19 +168,9 @@ const Services = () => {
       description: "Wisdom Teeth - Implant - Benign Tumor - Gum & Bone Surgery",
       doctors: [
         {
-          name: "Dr. Roger El Bassit",
-          specialty: "Oral Surgeon",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215713/898905_gdo9db.avif"
-        },
-        {
-          name: "Dr. Sami El Bassit",
+          name: "Dr. David Thompson",
           specialty: "Oral Surgeon",
           image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756215714/Alex_in_the_surgery_at_Munro_Dental_eawjzy.webp"
-        },
-        {
-          name: "Dr. Carlos Khoury",
-          specialty: "Oral Surgeon",
-          image: "https://res.cloudinary.com/dvybb2xnc/image/upload/v1756216191/How-Often-Should-I-See-the-Dentist-scaled_etmpkb.jpg"
         }
       ],
       icon: <FaStethoscope />,
