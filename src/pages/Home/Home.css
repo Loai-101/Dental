@@ -524,7 +524,7 @@
 
 .moving-text-content {
   display: flex;
-  animation: scrollText 60s linear infinite;
+  animation: scrollText 90s linear infinite;
   white-space: nowrap;
 }
 
@@ -683,6 +683,6 @@
   }
   
   .moving-text-content {
-    animation-duration: 45s;
+    animation-duration: 90s;
   }
 }
