@@ -103,7 +103,7 @@ const Home = () => {
               <Link to="/services" className="hero-button hero-button-primary">
                 Our Services
               </Link>
-              <Link to="/contact" className="hero-button hero-button-secondary">
+              <Link to="/appointment" className="hero-button hero-button-secondary">
                 Book Appointment
               </Link>
             </div>
