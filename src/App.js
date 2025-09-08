@@ -7,6 +7,7 @@ import Services from './pages/Services/Services';
 import Insurance from './pages/Insurance/Insurance';
 import Team from './pages/Team/Team';
 import Contact from './pages/Contact/Contact';
+import Appointment from './pages/Appointment/Appointment';
 import ScrollToTop from './components/ScrollToTop';
 import Loading from './components/Loading';
 import './App.css';
@@ -33,6 +34,7 @@ function App() {
               <Route path="/insurance" element={<Insurance />} />
               <Route path="/team" element={<Team />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/appointment" element={<Appointment />} />
             </Routes>
           </main>
           <Footer />
