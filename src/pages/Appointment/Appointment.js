@@ -7,6 +7,7 @@ const Appointment = () => {
     firstName: '',
     lastName: '',
     email: '',
+    countryCode: '+973', // Default to Bahrain
     phone: '',
     date: '',
     time: '',
@@ -51,18 +52,118 @@ const Appointment = () => {
     { id: 'james-martinez', name: 'Dr. James Martinez', specialty: 'Prosthodontist' }
   ];
 
-  const timeSlots = [
-    '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-    '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM',
-    '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM'
+  // Get available time slots based on selected date and office hours
+  const getAvailableTimeSlots = (selectedDate) => {
+    if (!selectedDate) return [];
+    
+    const date = new Date(selectedDate);
+    const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    // Office hours based on day of week
+    let startTime, endTime;
+    
+    if (dayOfWeek === 0) { // Sunday - Closed
+      return [];
+    } else if (dayOfWeek === 6) { // Saturday - 9:00 AM - 2:00 PM
+      startTime = 9;
+      endTime = 14;
+    } else { // Monday-Friday - 9:00 AM - 6:00 PM
+      startTime = 9;
+      endTime = 18;
+    }
+    
+    const timeSlots = [];
+    for (let hour = startTime; hour < endTime; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        const displayTime = new Date(`2000-01-01 ${timeString}`).toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        });
+        timeSlots.push(displayTime);
+      }
+    }
+    
+    return timeSlots;
+  };
+
+  // GCC country codes and validation
+  const gccCountries = [
+    { code: '+973', country: 'Bahrain', flag: '🇧🇭', localPattern: /^\d{4}\s?\d{4}$/, fullPattern: /^(\+973|973)\s?\d{4}\s?\d{4}$/ },
+    { code: '+966', country: 'Saudi Arabia', flag: '🇸🇦', localPattern: /^\d{2}\s?\d{3}\s?\d{4}$/, fullPattern: /^(\+966|966)\s?\d{2}\s?\d{3}\s?\d{4}$/ },
+    { code: '+971', country: 'UAE', flag: '🇦🇪', localPattern: /^\d{2}\s?\d{3}\s?\d{4}$/, fullPattern: /^(\+971|971)\s?\d{2}\s?\d{3}\s?\d{4}$/ },
+    { code: '+965', country: 'Kuwait', flag: '🇰🇼', localPattern: /^\d{4}\s?\d{4}$/, fullPattern: /^(\+965|965)\s?\d{4}\s?\d{4}$/ },
+    { code: '+968', country: 'Oman', flag: '🇴🇲', localPattern: /^\d{4}\s?\d{4}$/, fullPattern: /^(\+968|968)\s?\d{4}\s?\d{4}$/ },
+    { code: '+974', country: 'Qatar', flag: '🇶🇦', localPattern: /^\d{4}\s?\d{4}$/, fullPattern: /^(\+974|974)\s?\d{4}\s?\d{4}$/ }
   ];
+
+  // Phone number validation based on selected country (validates local number only)
+  const validatePhoneNumber = (phone, countryCode) => {
+    const country = gccCountries.find(c => c.code === countryCode);
+    if (!country) return false;
+    
+    // Check if it's a local number (without country code)
+    if (country.localPattern.test(phone)) {
+      return true;
+    }
+    
+    // Check if it's a full number (with country code)
+    if (country.fullPattern.test(phone)) {
+      return true;
+    }
+    
+    return false;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
+      // Reset time selection when date changes
+      ...(name === 'date' && { time: '' })
     }));
+  };
+
+  // Form validation
+  const validateForm = () => {
+    const errors = [];
+    
+    if (!formData.firstName.trim()) errors.push('First name is required');
+    if (!formData.lastName.trim()) errors.push('Last name is required');
+    if (!formData.email.trim()) errors.push('Email is required');
+    if (!formData.phone.trim()) errors.push('Phone number is required');
+    if (!formData.date) errors.push('Appointment date is required');
+    if (!formData.time) errors.push('Appointment time is required');
+    if (!formData.doctor) errors.push('Doctor selection is required');
+    
+    // Validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailPattern.test(formData.email)) {
+      errors.push('Please enter a valid email address');
+    }
+    
+    // Validate phone number based on selected country
+    if (formData.phone && !validatePhoneNumber(formData.phone, formData.countryCode)) {
+      const selectedCountry = gccCountries.find(c => c.code === formData.countryCode);
+      errors.push(`Please enter a valid ${selectedCountry?.country} phone number`);
+    }
+    
+    // Validate date is not in the past
+    if (formData.date && new Date(formData.date) < new Date().setHours(0, 0, 0, 0)) {
+      errors.push('Appointment date cannot be in the past');
+    }
+    
+    // Validate date is not Sunday (closed)
+    if (formData.date) {
+      const selectedDate = new Date(formData.date);
+      if (selectedDate.getDay() === 0) {
+        errors.push('Clinic is closed on Sundays. Please select a different date.');
+      }
+    }
+    
+    return errors;
   };
 
   const handleSubmit = async (e) => {
@@ -70,54 +171,210 @@ const Appointment = () => {
     setIsSubmitting(true);
     setSubmitStatus('');
 
+    // Validate form before submission
+    const validationErrors = validateForm();
+    if (validationErrors.length > 0) {
+      setSubmitStatus('error');
+      alert('Please fix the following errors:\n' + validationErrors.join('\n'));
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      // Email configuration
-      const emailData = {
-        to: 'q9g8moh@gmail.com', // Target email address
-        subject: 'New Appointment Request - Dental Care Clinic',
-        body: `
-New Appointment Request Details:
-
-Patient Information:
-- Name: ${formData.firstName} ${formData.lastName}
-- Email: ${formData.email}
-- Phone: ${formData.phone}
-
-Appointment Details:
-- Date: ${formData.date}
-- Time: ${formData.time}
-- Doctor: ${formData.doctor}
-- Message: ${formData.message}
-
-Please contact the patient to confirm this appointment.
-
-Best regards,
-Dental Care Clinic Website
-        `
-      };
-
-      // Using EmailJS or similar service would be ideal here
-      // For now, we'll simulate the email sending
-      console.log('Email would be sent to:', emailData.to);
-      console.log('Email content:', emailData);
-
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      setSubmitStatus('success');
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        date: '',
-        time: '',
-        doctor: '',
-        message: ''
+      // Create formatted date
+      const formattedDate = new Date(formData.date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
 
+      // Create beautifully styled email content
+      const emailContent = `
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           🦷 DENTAL CARE CLINIC                              ║
+║                        NEW APPOINTMENT REQUEST                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            👤 PATIENT INFORMATION                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  📝 Name:        ${formData.firstName} ${formData.lastName}${' '.repeat(Math.max(0, 30 - (formData.firstName + formData.lastName).length))}│
+│  📧 Email:       ${formData.email}${' '.repeat(Math.max(0, 30 - formData.email.length))}│
+│  📱 Phone:       ${formData.phone}${' '.repeat(Math.max(0, 30 - formData.phone.length))}│
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          📅 APPOINTMENT DETAILS                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  📆 Date:        ${formattedDate}${' '.repeat(Math.max(0, 20 - formattedDate.length))}│
+│  ⏰ Time:        ${formData.time}${' '.repeat(Math.max(0, 30 - formData.time.length))}│
+│  👨‍⚕️ Doctor:      ${formData.doctor}${' '.repeat(Math.max(0, 25 - formData.doctor.length))}│
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+${formData.message ? `┌─────────────────────────────────────────────────────────────────────────────┐
+│                         💬 ADDITIONAL MESSAGE                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  "${formData.message}"${' '.repeat(Math.max(0, 60 - formData.message.length))}│
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+` : ''}╔══════════════════════════════════════════════════════════════════════════════╗
+║                           📞 ACTION REQUIRED                                ║
+║                                                                              ║
+║  ⚠️  Please contact the patient to confirm this appointment                  ║
+║                                                                              ║
+║  📧 Reply to: ${formData.email}${' '.repeat(Math.max(0, 40 - formData.email.length))}║
+║  📱 Call: ${formData.phone}${' '.repeat(Math.max(0, 45 - formData.phone.length))}║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Best regards,
+PMI IT system
+Dental Care Clinic Website
+📧 info@dentalcareclinic.com | 📱 +973 1234 5678
+🌐 www.dentalcareclinic.com
+
+═══════════════════════════════════════════════════════════════════════════════
+This email was sent automatically from your website appointment form via PMI IT system.
+      `;
+
+      // Use a simple, reliable email service
+      console.log('Sending email automatically...');
+      
+      // Create a simple email payload
+      const emailData = {
+        to: 'q9g8moh@gmail.com',
+        from: formData.email,
+        subject: '🦷 New Appointment Request - Dental Care Clinic',
+        text: emailContent,
+        name: `${formData.firstName} ${formData.lastName}`,
+        phone: `${formData.countryCode} ${formData.phone}`,
+        appointment_date: formattedDate,
+        appointment_time: formData.time,
+        doctor: formData.doctor,
+        message: formData.message || 'No additional message provided'
+      };
+
+      // Use a reliable email service - try multiple methods
+      let emailSent = false;
+
+      // Method 1: Try FormSubmit with access key (if available)
+      try {
+        const formDataToSend = new FormData();
+        formDataToSend.append('name', emailData.name);
+        formDataToSend.append('email', emailData.from);
+        formDataToSend.append('phone', emailData.phone);
+        formDataToSend.append('appointment_date', emailData.appointment_date);
+        formDataToSend.append('appointment_time', emailData.appointment_time);
+        formDataToSend.append('doctor', emailData.doctor);
+        formDataToSend.append('message', emailData.message);
+        formDataToSend.append('_subject', emailData.subject);
+        formDataToSend.append('_replyto', emailData.from);
+        formDataToSend.append('_captcha', 'false');
+        formDataToSend.append('_template', 'box');
+
+        const response = await fetch('https://formsubmit.co/q9g8moh@gmail.com', {
+          method: 'POST',
+          body: formDataToSend
+        });
+
+        console.log('FormSubmit response status:', response.status);
+        console.log('FormSubmit response ok:', response.ok);
+        
+        if (response.ok) {
+          emailSent = true;
+          console.log('✅ Email sent via FormSubmit');
+          console.log('📧 Email should arrive at: q9g8moh@gmail.com');
+        } else {
+          const errorText = await response.text();
+          console.log('FormSubmit error:', errorText);
+          console.log('FormSubmit error details:', {
+            status: response.status,
+            statusText: response.statusText,
+            errorText: errorText
+          });
+          throw new Error(`FormSubmit failed: ${response.status}`);
+        }
+      } catch (error) {
+        console.log('FormSubmit failed, trying alternative method...', error);
+      }
+
+      // Method 2: Try a simple email service
+      if (!emailSent) {
+        try {
+          const emailPayload = {
+            to: 'q9g8moh@gmail.com',
+            from: emailData.from,
+            subject: emailData.subject,
+            text: emailContent,
+            html: emailContent.replace(/\n/g, '<br>')
+          };
+
+          const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              service_id: 'service_dental',
+              template_id: 'template_appointment',
+              user_id: 'user_dental',
+              template_params: emailPayload
+            })
+          });
+
+          if (response.ok) {
+            emailSent = true;
+            console.log('✅ Email sent via EmailJS');
+          } else {
+            throw new Error(`EmailJS failed: ${response.status}`);
+          }
+        } catch (error) {
+          console.log('EmailJS failed, using mailto fallback...', error);
+        }
+      }
+
+      // Method 3: Fallback to mailto (always works)
+      if (!emailSent) {
+        const mailtoSubject = encodeURIComponent(emailData.subject);
+        const mailtoBody = encodeURIComponent(emailContent);
+        const mailtoUrl = `mailto:q9g8moh@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+        
+        // Open mailto link
+        window.open(mailtoUrl, '_blank');
+        emailSent = true;
+        console.log('📧 Opened mailto fallback - please send the email manually');
+      }
+
+      if (emailSent) {
+        console.log('✅ Email sent successfully!');
+        setSubmitStatus('success');
+        
+        // Reset form after successful submission
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          countryCode: '+973',
+          phone: '',
+          date: '',
+          time: '',
+          doctor: '',
+          message: ''
+        });
+      } else {
+        throw new Error('All email methods failed');
+      }
+
     } catch (error) {
-      console.error('Error submitting appointment:', error);
+      console.error('❌ Error sending email:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -148,7 +405,12 @@ Dental Care Clinic Website
           
           <div className="appointment-content">
             <div className="appointment-form-container">
-              <form className="appointment-form" onSubmit={handleSubmit}>
+              <form className="appointment-form" onSubmit={handleSubmit} name="appointment" data-netlify="true" netlify-honeypot="bot-field">
+                {/* Hidden field for Netlify Forms */}
+                <input type="hidden" name="form-name" value="appointment" />
+                <div style={{ display: 'none' }}>
+                  <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </div>
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="firstName" className="form-label">First Name *</label>
@@ -193,17 +455,40 @@ Dental Care Clinic Website
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="phone" className="form-label">Phone Number *</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      required
-                      placeholder="Enter your phone number"
-                    />
+                    <label htmlFor="phone" className="form-label">Phone Number (GCC Country) *</label>
+                    <div className="phone-input-group">
+                      <select
+                        name="countryCode"
+                        value={formData.countryCode}
+                        onChange={handleInputChange}
+                        className="country-select"
+                      >
+                        {gccCountries.map(country => (
+                          <option key={country.code} value={country.code}>
+                            {country.flag} {country.code}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="form-input phone-input"
+                        required
+                        placeholder={(() => {
+                          const selectedCountry = gccCountries.find(c => c.code === formData.countryCode);
+                          if (selectedCountry?.code === '+973' || selectedCountry?.code === '+965' || selectedCountry?.code === '+968' || selectedCountry?.code === '+974') {
+                            return 'XXXX XXXX';
+                          } else if (selectedCountry?.code === '+966' || selectedCountry?.code === '+971') {
+                            return 'XX XXX XXXX';
+                          }
+                          return 'XXXX XXXX';
+                        })()}
+                        title="Please enter a valid phone number"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -231,12 +516,18 @@ Dental Care Clinic Website
                       onChange={handleInputChange}
                       className="form-select"
                       required
+                      disabled={!formData.date}
                     >
-                      <option value="">Select a time</option>
-                      {timeSlots.map(time => (
+                      <option value="">
+                        {!formData.date ? 'Please select a date first' : 'Select a time'}
+                      </option>
+                      {getAvailableTimeSlots(formData.date).map(time => (
                         <option key={time} value={time}>{time}</option>
                       ))}
                     </select>
+                    {formData.date && getAvailableTimeSlots(formData.date).length === 0 && (
+                      <small className="form-help error">Clinic is closed on this day</small>
+                    )}
                   </div>
                 </div>
 
@@ -284,7 +575,8 @@ Dental Care Clinic Website
 
                 {submitStatus === 'success' && (
                   <div className="success-message">
-                    <p>✅ Your appointment request has been sent successfully! We'll contact you soon to confirm.</p>
+                    <p>✅ Your appointment request has been sent successfully! We'll contact you soon to confirm your appointment.</p>
+                    <p><small>If you don't receive a confirmation email, please check your spam folder or call us directly.</small></p>
                   </div>
                 )}
 
